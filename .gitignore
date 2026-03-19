@@ -1,0 +1,20 @@
+.env
+__pycache__/
+*.pyc
+Sarabun-Regular.ttf
+Sarabun-Bold.ttf
+.DS_Store
+
+# Generated data — large files, reproducible
+docs/
+ground_truth/
+
+# Raw eval results (reproducible, large)
+results/*.json
+results/run_log.txt
+
+# Old / backup plots
+results/plots/old/
+results/plots/backup/
+
+# Plots are tracked (results/plots/*.png are included)
