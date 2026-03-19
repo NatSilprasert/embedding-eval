@@ -267,6 +267,35 @@ python 06_plot_selected_models.py bge-m3 qwen3-embedding-4b qwen3-embedding-8b \
 
 ---
 
+## Results Summary
+
+> Full analysis with all charts → **[ANALYSIS.md](ANALYSIS.md)**
+
+### Model Ranking (Composite Score, avg all strategies & docs)
+
+| Rank | Model | Composite | Cost / 1M | Embed Latency |
+|------|-------|:---------:|:---------:|:-------------:|
+| 1 | gemini-embedding-001 | **0.8660** | $0.15 | 111 ms |
+| 2 | bge-m3 | 0.8320 | $0.01 | 168 ms* |
+| 3 | qwen3-embedding-8b | 0.8308 | $0.05 | 157 ms* |
+| 4 | qwen3-embedding-4b | 0.8171 | $0.02 | 191 ms* |
+| 5 | cohere-embed-v3 | 0.8130 | $0.10 | **24 ms** |
+| 6 | cohere-embed-v4 | 0.8129 | $0.12 | **24 ms** |
+| 7 | text-embedding-3-large | 0.7940 | $0.13 | 73 ms |
+| 8 | text-embedding-3-small | 0.7845 | $0.02 | 58 ms |
+
+> \* via OpenRouter — self-hosted latency would be ~10–30 ms
+
+### Best Chunking Strategy per Model
+
+`token_500_ov50` ชนะใน 6/8 models — overlap 50 tokens ช่วย context ที่ขอบ chunk ไม่หาย
+
+### Cost vs Composite Score
+
+![Cost vs Composite Score](results/plots/eval_results_combined.png)
+
+---
+
 ## Notes
 
 - **Resume safety**: `03_run_all.py` validates existing result files (JSON parse check) and skips complete ones — safe to interrupt and restart.

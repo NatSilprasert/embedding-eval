@@ -1,6 +1,6 @@
 # Embedding Model Evaluation — Detailed Analysis
 
-> **Dataset:** 12,160 evaluation rows across 8 models × 4 chunking strategies × 18 non-mixed documents × 40 questions each  
+> **Dataset:** 12,000 evaluation rows across 8 models × 4 chunking strategies × 18 non-mixed documents × 20 questions each  
 > **Metrics:** Recall@5, MRR, NDCG@5, Answer Similarity, Composite Score  
 > **Documents:** 9 Thai–English document pairs from 6 domains (IT Service, E-Commerce, Legal, Investment, Insurance, Banking)
 
@@ -29,6 +29,12 @@
 
 ---
 
+### Cost vs Composite Score
+
+![Cost vs Composite Score](results/plots/eval_results_combined.png)
+
+---
+
 ## 2. Metric Breakdown per Model
 
 | Model | Recall@5 | MRR | NDCG@5 | Answer Sim | Composite |
@@ -47,6 +53,12 @@
 - **Recall, MRR, NDCG:** โมเดลส่วนใหญ่ได้คะแนนใกล้เคียงกันในกลุ่มนี้ (0.85–0.96) — cohere-embed-v4 ชนะสูสีที่สุดในทั้งสามมิตินี้ แต่กลับไม่ได้ composite สูงสุด
 - **Answer Similarity เป็น differentiator หลัก:** Gemini (0.7365) ห่างจากอันดับ 2 (bge-m3: 0.6564) ถึง 0.08 คะแนน ซึ่งเป็นช่องว่างที่ใหญ่ที่สุดระหว่าง metrics ทั้งหมด — บ่งชี้ว่า Gemini เข้าใจ semantic content ในเชิงลึกกว่า
 - **Cohere v4 anomaly:** Recall สูงมาก (0.889) แต่ Answer Similarity ต่ำ (0.542) กว่า cohere-embed-v3 ซึ่งมี Recall ต่ำกว่า (0.856) — แสดงว่า v4 ดึง chunk ที่ "มีคำที่เกี่ยวข้อง" ได้ดี แต่ไม่ใช่ chunk ที่ "ตอบคำถามได้ดีที่สุด" ในเชิง semantic
+
+---
+
+### Composite Score by Model × Strategy
+
+![Composite Score](results/plots/plot_composite_score.png)
 
 ---
 
@@ -101,6 +113,12 @@
 
 ---
 
+### Strategy Comparison by Model
+
+![Strategy Comparison](results/plots/plot_strategy_comparison.png)
+
+---
+
 ## 5. Language Performance (Thai vs English)
 
 | Model | TH Score | EN Score | Gap (TH−EN) |
@@ -120,6 +138,12 @@
 - **OpenAI models (text-embedding-3) มี gap กับภาษาไทยสูงที่สุด** (−0.09 ถึง −0.06) สะท้อนว่าโมเดลเหล่านี้ถูก train มา dominant ด้วยภาษาอังกฤษ
 - **bge-m3 ออกแบบมาสำหรับภาษาไทยได้ดี** โดยมี gap เพียง −0.022 ซึ่งใกล้เคียง Gemini (−0.023) และถือว่าดีมากสำหรับ open-source model
 - **Cohere v4 มี Thai-English gap น้อยที่สุด (−0.009)** บ่งชี้ว่าโมเดลนี้ถูก train ด้วย multilingual data ที่สมดุลกว่า แม้ overall composite จะไม่สูงที่สุด
+
+---
+
+### Recall@5 by Model × Strategy
+
+![Recall@5](results/plots/plot_recall_at_5.png)
 
 ---
 
@@ -150,6 +174,12 @@
 - **Multihop questions ได้คะแนนสูงสุด (0.827)** ซึ่งแปลกเล็กน้อย — ปกติคำถามที่ต้องใช้หลาย chunk ควรยากกว่า แต่ผลออกมาดีกว่า factual ซึ่งอาจหมายความว่า ground truth ที่ generate ขึ้น multihop ยังไม่ซับซ้อนพอ หรือ chunk ขนาด 500 tokens ครอบคลุม context ได้ดีพอสำหรับ question ประเภทนี้
 - **Crosslingual: Gemini ชนะห่างชัดเจน (0.8726)** ห่างอันดับ 2 ถึง 0.042 คะแนน — แสดงถึงความสามารถ cross-lingual embedding ที่เหนือกว่าอย่างมีนัยสำคัญ
 - **bge-m3 ดีมากใน crosslingual (0.8307)** เมื่อเทียบกับขนาดและความฟรี — ถือเป็น open-source ที่เก่งด้าน multilingual มากที่สุด
+
+---
+
+### Answer Similarity by Model × Strategy
+
+![Answer Similarity](results/plots/plot_answer_similarity.png)
 
 ---
 
@@ -184,6 +214,14 @@
 - **IT Service ทำได้แย่ที่สุด** — เอกสาร technest และ datastream มี jargon เฉพาะทาง คำศัพท์เทคนิค และมักต้องการ context หลาย chunk ประกอบกัน
 - **E-Commerce std สูงสุด (0.101)** — ชี้ให้เห็นว่า document ประเภทนี้มีความหลากหลายของคำถามมากที่สุด (product name, price, policy ต่างกัน)
 - **Shieldauto เป็น best individual document** — อาจเพราะเนื้อหา Insurance มีโครงสร้างข้อมูลที่เป็น fact-based ชัดเจน (เช่น coverage amounts, policy terms)
+
+---
+
+### MRR and NDCG@5
+
+![MRR](results/plots/plot_mrr.png)
+
+![NDCG@5](results/plots/plot_ndcg_at_5.png)
 
 ---
 
