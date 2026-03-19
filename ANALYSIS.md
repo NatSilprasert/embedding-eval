@@ -115,7 +115,7 @@
 
 ### Strategy Comparison by Model
 
-![Strategy Comparison](results/plots/plot_strategy_comparison.png)
+> Generate with: `python 07_plot_strategy_comparison.py`
 
 ---
 
