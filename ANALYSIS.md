@@ -76,6 +76,8 @@
 
 ## 3. Chunking Strategy Analysis
 
+![Strategy_Comparison](results/plots/plot_strategy_comparison.png)
+
 | Strategy | Mean Composite | Std | หมายเหตุ |
 |----------|:--------------:|:---:|---------|
 | **token_500_ov50** | **0.8306** | 0.0833 | 500 tokens, overlap 50 |
